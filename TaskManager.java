@@ -3,7 +3,7 @@ import java.util.*;
 public class TaskManager {
     private Map<Integer, Task> taskMap;
     private Set<User> users;
-    private static int taskIdCounter = 1;  // To generate unique task IDs
+    private static int taskIdCounter = 1; // To generate unique task IDs
 
     public TaskManager() {
         taskMap = new HashMap<>();
@@ -17,7 +17,6 @@ public class TaskManager {
         System.out.println("User added: " + user);
     }
 
-    // Create a new task and assign it to a user
     public void createTask(String title, String priority, String status, String username) {
         Optional<User> user = users.stream().filter(u -> u.getUsername().equals(username)).findFirst();
         if (user.isPresent()) {
@@ -30,7 +29,6 @@ public class TaskManager {
         }
     }
 
-    // Update the status of a task
     public void updateTaskStatus(int taskId, String status) {
         Task task = taskMap.get(taskId);
         if (task != null) {
@@ -41,28 +39,24 @@ public class TaskManager {
         }
     }
 
-    // List tasks assigned to a user
     public void listTasksByUser(String username) {
         taskMap.values().stream()
                 .filter(task -> task.getAssignedUser().getUsername().equals(username))
                 .forEach(System.out::println);
     }
 
-    // List all tasks by priority
     public void listTasksByPriority(String priority) {
         taskMap.values().stream()
                 .filter(task -> task.getPriority().equalsIgnoreCase(priority))
                 .forEach(System.out::println);
     }
 
-    // List all tasks with a specific status
     public void listTasksByStatus(String status) {
         taskMap.values().stream()
                 .filter(task -> task.getStatus().equalsIgnoreCase(status))
                 .forEach(System.out::println);
     }
 
-    // Method to display the main menu
     public void showMenu() {
         System.out.println("\nTask Manager Menu:");
         System.out.println("1. Add User");
@@ -82,7 +76,7 @@ public class TaskManager {
         while (true) {
             taskManager.showMenu();
             int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1: // Add User
@@ -108,31 +102,31 @@ public class TaskManager {
                 case 3: // Update Task Status
                     System.out.print("Enter task ID to update: ");
                     int taskId = scanner.nextInt();
-                    scanner.nextLine();  // Consume newline
+                    scanner.nextLine(); // Consume newline
                     System.out.print("Enter new status (Not Started, In Progress, Completed): ");
                     String newStatus = scanner.nextLine();
                     taskManager.updateTaskStatus(taskId, newStatus);
                     break;
 
-                case 4: // List Tasks by User
+                case 4:
                     System.out.print("Enter username to list tasks: ");
                     String userToList = scanner.nextLine();
                     taskManager.listTasksByUser(userToList);
                     break;
 
-                case 5: // List Tasks by Priority
+                case 5:
                     System.out.print("Enter priority to filter tasks (Low, Medium, High): ");
                     String taskPriority = scanner.nextLine();
                     taskManager.listTasksByPriority(taskPriority);
                     break;
 
-                case 6: // List Tasks by Status
+                case 6:
                     System.out.print("Enter status to filter tasks (Not Started, In Progress, Completed): ");
                     String taskStatus = scanner.nextLine();
                     taskManager.listTasksByStatus(taskStatus);
                     break;
 
-                case 7: // Exit
+                case 7:
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
@@ -188,7 +182,9 @@ class Task {
 
     @Override
     public String toString() {
-        return "Task{id=" + id + ", title='" + title + "', priority='" + priority + "', status='" + status + "', assignedUser=" + assignedUser + '}';
+
+        return "Task{id=" + id + ", title='" + title + "', priority='" + priority + "', status='" + status
+                + "', assignedUser=" + assignedUser + '}';
     }
 }
 
